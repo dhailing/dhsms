@@ -11,5 +11,18 @@ namespace dhsms\Send;
 
 class Send
 {
+    private $config;
 
+
+    private $drivers;
+
+
+    private $pool;
+
+
+
+    public function __construct(array $config)
+    {
+        $this->config = $config;
+    }
 }
