@@ -1,6 +1,6 @@
 {
     "name": "dhsms/dhsms",
-    "description": "phpppp",
+    "description": "php dhsms",
     "require": {
         "php": ">=5.3"
     },
