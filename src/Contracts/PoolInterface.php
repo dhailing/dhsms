@@ -70,5 +70,5 @@ interface PoolInterface
      * Date: 2019/1/27
      * Time: 10:21
      */
-    public function repassword(array $config);
+//    public function repassword(array $config);
 }

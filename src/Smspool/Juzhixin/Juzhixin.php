@@ -10,6 +10,8 @@ namespace dhsms\Send\Smspool;
 
 
 use dhsms\Send\Contracts\PoolInterface;
+use dhsms\Send\Exceptions\InvalidArgumentException;
+use dhsms\Send\Exceptions\PoolException;
 use dhsms\Send\Support\Config;
 use dhsms\Send\Traits\HasHttpRequest;
 
@@ -80,6 +82,7 @@ abstract class Juzhixin implements PoolInterface
             'content' => $this->parmas_conf->get('content', '123456'),
             'sendTime' => $this->parmas_conf->get('sendTime', ''),
             'extno' => $this->parmas_conf->get('extno', ''),
+            'statusNum' => $this->parmas_conf->get('statusNum', ''),
         ];
     }
 
@@ -99,33 +102,259 @@ abstract class Juzhixin implements PoolInterface
         return md5($account . $password . $this->timestamp);
     }
 
+    /**
+     * 发送
+     * @param array $config
+     * @return array|mixed
+     * @throws PoolException
+     * User: Dh106
+     * Date: 2019/1/27
+     * Time: 19:46
+     */
     public function send(array $config)
     {
         // TODO: Implement send() method.
+        $postString = $this->formateData('send');
+
+        return $this->getResult('send', $this->snd, $postString);
     }
 
+    /**
+     * 查询
+     * @param array $config
+     * @return array|mixed
+     * @throws PoolException
+     * User: Dh106
+     * Date: 2019/1/27
+     * Time: 19:46
+     */
     public function query(array $config)
     {
         // TODO: Implement query() method.
+        $postString = $this->formateData('query');
+
+        return $this->getResult('query', $this->overage, $postString);
     }
 
+    /**
+     * 禁用关键字
+     * @param array $config
+     * @return array|mixed
+     * @throws PoolException
+     * User: Dh106
+     * Date: 2019/1/27
+     * Time: 19:46
+     */
     public function forbid(array $config)
     {
         // TODO: Implement forbid() method.
+        $postString = $this->formateData('forbid');
+
+        return $this->getResult('forbid', $this->checkkeyword, $postString);
     }
 
+    /**
+     * 状态
+     * @param array $config
+     * @return array|mixed
+     * @throws PoolException
+     * User: Dh106
+     * Date: 2019/1/27
+     * Time: 19:47
+     */
     public function status(array $config)
     {
         // TODO: Implement status() method.
+        $postString = $this->formateData('status');
+
+        return $this->getResult('status', $this->statusnum, $postString);
     }
 
+    /**
+     * 上行
+     * @param array $config
+     * @return array|mixed
+     * @throws PoolException
+     * User: Dh106
+     * Date: 2019/1/27
+     * Time: 19:47
+     */
     public function upward(array $config)
     {
         // TODO: Implement upward() method.
+        $postString = $this->formateData('upward');
+
+        return $this->getResult('upward', $this->upstream, $postString);
     }
 
-    public function repassword(array $config)
+
+    /**
+     * 格式化接口需要的数据
+     * @param $type
+     * @return bool|string
+     * User: Dh106
+     * Date: 2019/1/27
+     * Time: 19:40
+     */
+    private function formateData($type)
     {
-        // TODO: Implement repassword() method.
+        $postData = [];
+        switch ($type) {
+            case 'send':
+                $postData = [
+                    'userid' => $this->config['subid'],
+                    'timestamp' => $this->config['timestamp'],
+                    'sign' => $this->config['sign'],
+                    'mobile' => $this->config['mobile'],
+                    'content' => $this->config['content'],
+                    'sendTime' => $this->config['sendTime'],
+                    'extno' => $this->config['extno'],
+                ];
+                break;
+            case 'query':
+                $postData = [
+                    'userid' => $this->config['subid'],
+                    'timestamp' => $this->config['timestamp'],
+                    'sign' => $this->config['sign'],
+                ];
+                break;
+            case 'forbid':
+                $postData = [
+                    'userid' => $this->config['subid'],
+                    'timestamp' => $this->config['timestamp'],
+                    'content' => $this->config['content'],
+                ];
+                break;
+            case 'status':
+                $postData = [
+                    'userid' => $this->config['subid'],
+                    'timestamp' => $this->config['timestamp'],
+                    'statusNum' => $this->config['statusNum'],
+                ];
+                break;
+            case 'upward':
+                $postData = [
+                    'userid' => $this->config['subid'],
+                    'timestamp' => $this->config['timestamp'],
+                    'sign' => $this->config['sign'],
+                ];
+                break;
+            case 'repassword':
+                break;
+            default:
+                break;
+        }
+
+        $formatString = '';
+        foreach ($postData as $k => $v) {
+            $formatString .= "$k=" . urlencode($v) . '&';
+        }
+
+        $postString = substr($formatString, 0, -1);
+
+        return $postString;
+    }
+
+
+    /**
+     * 返回结果
+     * @param $type
+     * @param $hotPath
+     * @param $postSting
+     * @return array
+     * @throws PoolException
+     * User: Dh106
+     * Date: 2019/1/27
+     * Time: 19:35
+     */
+    protected function getResult($type, $hotPath, $postSting)
+    {
+
+        $data = $this->fromXml($this->post($this->pool . $hotPath, $postSting));
+
+        $result = [];
+        try {
+            switch ($type) {
+                case 'send':
+                    if ($data['returnstatus'] == 'Success') {
+                        $result = [
+                            'status' => $data['returnstatus'],
+                            'msg' => $data['message'],
+                            'data' => $data['taskID']
+                        ];
+                    } else {
+                        throw new PoolException($data['message']);
+                    }
+                    break;
+                case 'query':
+                    if ($data['returnstatus'] == 'Sucess') {
+                        $result = [
+                            'status' => $data['returnstatus'],
+                            'msg' => $data['message'],
+                            'data' => $data['overage']
+                        ];
+                    } else {
+                        throw new PoolException($data['message']);
+                    }
+                    break;
+                case 'forbid':
+                    $result = [
+                        'status' => true,
+                        'msg' => $data['message'],
+                        'data' => null
+                    ];
+                    break;
+                case 'status':
+                    if (!isset($data['errorstatus'])) {
+                        $result = [
+                            'status' => true,
+                            'msg' => 'Success',
+                            'data' => $data
+                        ];
+                    } else {
+                        throw new PoolException($data['remark']);
+                    }
+                    break;
+                case 'upward':
+                    if (!isset($data['errorstatus'])) {
+                        $result = [
+                            'status' => true,
+                            'msg' => 'Success',
+                            'data' => $data
+                        ];
+                    } else {
+                        throw new PoolException($data['remark']);
+                    }
+                    break;
+                case 'repassword':
+
+                    break;
+                default:
+                    break;
+            }
+
+            return $result;
+        } catch (PoolException $e) {
+            throw new PoolException($e->getMessage(), 2000, $data);
+        }
+    }
+
+    /**
+     * 转义xml
+     * @param $xml
+     * @return mixed
+     * User: Dh106
+     * Date: 2019/1/27
+     * Time: 17:44
+     */
+    protected function fromXml($xml)
+    {
+        if (!$xml) {
+            throw new InvalidArgumentException('convert to array error !invalid xml');
+        }
+
+        libxml_disable_entity_loader(true);
+
+        return json_decode(json_encode(simplexml_load_string($xml, 'SimpleXMLElement', LIBXML_NOCDATA), JSON_UNESCAPED_UNICODE), true);
     }
 }
