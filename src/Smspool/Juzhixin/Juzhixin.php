@@ -6,7 +6,7 @@
  * Time: 10:23
  */
 
-namespace dhsms\Send\Smspool;
+namespace dhsms\Send\Smspool\Juzhixin;
 
 
 use dhsms\Send\Contracts\PoolInterface;
