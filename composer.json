@@ -1,5 +1,9 @@
 {
+    "name": "dhsms/dhsms",
+    "description": "phpppp",
     "require": {
-        "guzzlehttp/guzzle": "^6.3"
-    }
+        "php": ">=5.3"
+    },
+    "license": "MIT",
+    "minimum-stability": "dev"
 }
