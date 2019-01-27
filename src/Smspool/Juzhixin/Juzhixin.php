@@ -74,8 +74,8 @@ abstract class Juzhixin implements PoolInterface
 
         $this->config = [
             'account' => $this->parmas_conf->get('account', 'test'),
-            'password' => $this->parmas_conf->get('password', '111111'),
-            'subid' => $this->parmas_conf->get('subid', ''),
+            'password' => $this->parmas_conf->get('password', 'test'),
+            'subid' => $this->parmas_conf->get('subid', '12'),
             'timestamp' => $this->timestamp,
             'sign' => $this->createSign(),
             'mobile' => $this->parmas_conf->get('mobile', ''),
