@@ -1,9 +1,20 @@
 {
     "name": "dhsms/dhsms",
     "description": "php dhsms",
+    "authors": [
+        {
+            "name": "dhailing",
+            "email": "1066179972@qq.com"
+        }
+    ],
     "require": {
         "php": ">=5.3"
     },
     "license": "MIT",
-    "minimum-stability": "dev"
+    "minimum-stability": "dev",
+    "autoload": {
+        "psr-4": {
+            "dhsms\\": "src/"
+        }
+    }
 }
