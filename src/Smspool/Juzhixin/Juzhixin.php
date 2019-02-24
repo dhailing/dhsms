@@ -128,13 +128,13 @@ abstract class Juzhixin implements PoolInterface
      * Date: 2019/1/27
      * Time: 19:46
      */
-    public function query(array $config)
-    {
-        // TODO: Implement query() method.
-        $postString = $this->formateData('query');
-
-        return $this->getResult('query', $this->overage, $postString);
-    }
+//    public function query(array $config)
+//    {
+//        // TODO: Implement query() method.
+//        $postString = $this->formateData('query');
+//
+//        return $this->getResult('query', $this->overage, $postString);
+//    }
 
     /**
      * 禁用关键字
@@ -145,13 +145,13 @@ abstract class Juzhixin implements PoolInterface
      * Date: 2019/1/27
      * Time: 19:46
      */
-    public function forbid(array $config)
-    {
-        // TODO: Implement forbid() method.
-        $postString = $this->formateData('forbid');
-
-        return $this->getResult('forbid', $this->checkkeyword, $postString);
-    }
+//    public function forbid(array $config)
+//    {
+//        // TODO: Implement forbid() method.
+//        $postString = $this->formateData('forbid');
+//
+//        return $this->getResult('forbid', $this->checkkeyword, $postString);
+//    }
 
     /**
      * 状态
@@ -162,13 +162,13 @@ abstract class Juzhixin implements PoolInterface
      * Date: 2019/1/27
      * Time: 19:47
      */
-    public function status(array $config)
-    {
-        // TODO: Implement status() method.
-        $postString = $this->formateData('status');
-
-        return $this->getResult('status', $this->statusnum, $postString);
-    }
+//    public function status(array $config)
+//    {
+//        // TODO: Implement status() method.
+//        $postString = $this->formateData('status');
+//
+//        return $this->getResult('status', $this->statusnum, $postString);
+//    }
 
     /**
      * 上行
@@ -179,13 +179,13 @@ abstract class Juzhixin implements PoolInterface
      * Date: 2019/1/27
      * Time: 19:47
      */
-    public function upward(array $config)
-    {
-        // TODO: Implement upward() method.
-        $postString = $this->formateData('upward');
-
-        return $this->getResult('upward', $this->upstream, $postString);
-    }
+//    public function upward(array $config)
+//    {
+//        // TODO: Implement upward() method.
+//        $postString = $this->formateData('upward');
+//
+//        return $this->getResult('upward', $this->upstream, $postString);
+//    }
 
 
     /**
@@ -211,36 +211,36 @@ abstract class Juzhixin implements PoolInterface
                     'extno' => $this->config['extno'],
                 ];
                 break;
-            case 'query':
-                $postData = [
-                    'userid' => $this->config['subid'],
-                    'timestamp' => $this->config['timestamp'],
-                    'sign' => $this->config['sign'],
-                ];
-                break;
-            case 'forbid':
-                $postData = [
-                    'userid' => $this->config['subid'],
-                    'timestamp' => $this->config['timestamp'],
-                    'content' => $this->config['content'],
-                ];
-                break;
-            case 'status':
-                $postData = [
-                    'userid' => $this->config['subid'],
-                    'timestamp' => $this->config['timestamp'],
-                    'statusNum' => $this->config['statusNum'],
-                ];
-                break;
-            case 'upward':
-                $postData = [
-                    'userid' => $this->config['subid'],
-                    'timestamp' => $this->config['timestamp'],
-                    'sign' => $this->config['sign'],
-                ];
-                break;
-            case 'repassword':
-                break;
+//            case 'query':
+//                $postData = [
+//                    'userid' => $this->config['subid'],
+//                    'timestamp' => $this->config['timestamp'],
+//                    'sign' => $this->config['sign'],
+//                ];
+//                break;
+//            case 'forbid':
+//                $postData = [
+//                    'userid' => $this->config['subid'],
+//                    'timestamp' => $this->config['timestamp'],
+//                    'content' => $this->config['content'],
+//                ];
+//                break;
+//            case 'status':
+//                $postData = [
+//                    'userid' => $this->config['subid'],
+//                    'timestamp' => $this->config['timestamp'],
+//                    'statusNum' => $this->config['statusNum'],
+//                ];
+//                break;
+//            case 'upward':
+//                $postData = [
+//                    'userid' => $this->config['subid'],
+//                    'timestamp' => $this->config['timestamp'],
+//                    'sign' => $this->config['sign'],
+//                ];
+//                break;
+//            case 'repassword':
+//                break;
             default:
                 break;
         }
@@ -286,49 +286,49 @@ abstract class Juzhixin implements PoolInterface
                         throw new PoolException($data['message']);
                     }
                     break;
-                case 'query':
-                    if ($data['returnstatus'] == 'Sucess') {
-                        $result = [
-                            'status' => $data['returnstatus'],
-                            'msg' => $data['message'],
-                            'data' => $data['overage']
-                        ];
-                    } else {
-                        throw new PoolException($data['message']);
-                    }
-                    break;
-                case 'forbid':
-                    $result = [
-                        'status' => true,
-                        'msg' => $data['message'],
-                        'data' => null
-                    ];
-                    break;
-                case 'status':
-                    if (!isset($data['errorstatus'])) {
-                        $result = [
-                            'status' => true,
-                            'msg' => 'Success',
-                            'data' => $data
-                        ];
-                    } else {
-                        throw new PoolException($data['remark']);
-                    }
-                    break;
-                case 'upward':
-                    if (!isset($data['errorstatus'])) {
-                        $result = [
-                            'status' => true,
-                            'msg' => 'Success',
-                            'data' => $data
-                        ];
-                    } else {
-                        throw new PoolException($data['remark']);
-                    }
-                    break;
-                case 'repassword':
-
-                    break;
+//                case 'query':
+//                    if ($data['returnstatus'] == 'Sucess') {
+//                        $result = [
+//                            'status' => $data['returnstatus'],
+//                            'msg' => $data['message'],
+//                            'data' => $data['overage']
+//                        ];
+//                    } else {
+//                        throw new PoolException($data['message']);
+//                    }
+//                    break;
+//                case 'forbid':
+//                    $result = [
+//                        'status' => true,
+//                        'msg' => $data['message'],
+//                        'data' => null
+//                    ];
+//                    break;
+//                case 'status':
+//                    if (!isset($data['errorstatus'])) {
+//                        $result = [
+//                            'status' => true,
+//                            'msg' => 'Success',
+//                            'data' => $data
+//                        ];
+//                    } else {
+//                        throw new PoolException($data['remark']);
+//                    }
+//                    break;
+//                case 'upward':
+//                    if (!isset($data['errorstatus'])) {
+//                        $result = [
+//                            'status' => true,
+//                            'msg' => 'Success',
+//                            'data' => $data
+//                        ];
+//                    } else {
+//                        throw new PoolException($data['remark']);
+//                    }
+//                    break;
+//                case 'repassword':
+//
+//                    break;
                 default:
                     break;
             }
