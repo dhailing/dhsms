@@ -9,7 +9,7 @@
  * with this source code in the file LICENSE.
  */
 
-namespace dhsms\Traits;
+namespace dhsms\Send\Traits;
 
 use GuzzleHttp\Client;
 use Psr\Http\Message\ResponseInterface;

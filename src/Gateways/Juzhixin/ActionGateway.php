@@ -7,7 +7,7 @@
  * Time: 15:00
  */
 
-namespace dhsms\Gateways\Juzhixin;
+namespace dhsms\Send\Gateways\Juzhixin;
 
 
 class ActionGateway extends Juzhixin

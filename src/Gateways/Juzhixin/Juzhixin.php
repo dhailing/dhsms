@@ -7,7 +7,7 @@
  * Time: 13:55
  */
 
-namespace dhsms\Gateways\Juzhixin;
+namespace dhsms\Send\Gateways\Juzhixin;
 
 
 use dhsms\Contracts\GatewayInterface;

@@ -1,6 +1,6 @@
 <?php
 
-namespace dhsms\Support;
+namespace dhsms\Send\Support;
 
 use ArrayAccess;
 use dhsms\Exceptions\InvalidArgumentException;

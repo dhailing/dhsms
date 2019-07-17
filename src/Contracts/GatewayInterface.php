@@ -1,6 +1,6 @@
 <?php
 
-namespace dhsms\Contracts;
+namespace dhsms\Send\Contracts;
 
 interface GatewayInterface
 {
