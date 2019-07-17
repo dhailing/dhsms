@@ -57,9 +57,7 @@ abstract class Juzhixin implements GatewayInterface
         $this->config['sign'] = $this->getsign();
         $this->config['mobile'] = $config_biz['mobile'];
         $this->config['content'] = $config_biz['content'];
-        $this->config['sendTime'] = $config_biz['sendTime'] ?: '';
-
-//        return $this->doSend();
+        $this->config['sendTime'] = isset($config_biz['sendTime']) && !empty($config_biz['sendTime']) ?: '';
     }
 
     /**
@@ -97,12 +95,12 @@ abstract class Juzhixin implements GatewayInterface
         curl_setopt($ch, CURLOPT_URL, $this->gateway);
         curl_setopt($ch, CURLOPT_POSTFIELDS, $postData);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        $result = curl_exec($ch);
+        $data = curl_exec($ch);
 
         //xml转换
-        $xml = simplexml_load_string($result);
-        $data = json_decode(json_encode($xml),true);
+        $xml = simplexml_load_string($data);
+        $result = json_decode(json_encode($xml),true);
 
-        return $data;
+        return $result;
     }
 }

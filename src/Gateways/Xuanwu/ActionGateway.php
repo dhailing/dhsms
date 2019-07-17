@@ -7,14 +7,14 @@
  * Time: 15:00
  */
 
-namespace dhsms\Send\Gateways\Juzhixin;
+namespace dhsms\Send\Gateways\Xuanwu;
 
 
-class ActionGateway extends Juzhixin
+class ActionGateway extends Xuanwu
 {
 
     /**
-     * 发送短信
+     * 发送
      * @param array $config_biz
      * @return mixed
      * User: DH
