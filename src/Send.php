@@ -10,8 +10,8 @@
 namespace dhsms\Send;
 
 
-use dhsms\Exceptions\InvalidArgumentException;
-use dhsms\Support\Config;
+use dhsms\Send\Exceptions\InvalidArgumentException;
+use dhsms\Send\Support\Config;
 
 class Send
 {

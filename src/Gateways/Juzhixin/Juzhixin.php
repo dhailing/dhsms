@@ -10,9 +10,9 @@
 namespace dhsms\Send\Gateways\Juzhixin;
 
 
-use dhsms\Contracts\GatewayInterface;
-use dhsms\Exceptions\InvalidArgumentException;
-use dhsms\Support\Config;
+use dhsms\Send\Contracts\GatewayInterface;
+use dhsms\Send\Exceptions\InvalidArgumentException;
+use dhsms\Send\Support\Config;
 
 abstract class Juzhixin implements GatewayInterface
 {

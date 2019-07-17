@@ -3,7 +3,7 @@
 namespace dhsms\Send\Support;
 
 use ArrayAccess;
-use dhsms\Exceptions\InvalidArgumentException;
+use dhsms\Send\Exceptions\InvalidArgumentException;
 
 class Config implements ArrayAccess
 {
