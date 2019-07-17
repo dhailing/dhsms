@@ -31,9 +31,9 @@ abstract class Aliyun implements GatewayInterface
         }
 
         $this->config = [
-            'accessKeyId' => $this->user_config->get('accessKeyId'),
+            'AccessKeyId' => $this->user_config->get('accessKeyId'),
             'accessKeySecret' => $this->user_config->get('accessKeySecret'),
-            'signName' => $this->user_config->get('signName'),
+            'SignName' => $this->user_config->get('signName'),
             'Timestamp' => gmdate("Y-m-d\TH:i:s\Z"),
             'SignatureVersion' => '1.0',
             'SignatureNonce' => uniqid(mt_rand(0, 0xffff), true),
@@ -115,19 +115,17 @@ abstract class Aliyun implements GatewayInterface
         curl_setopt($ch, CURLOPT_URL, $this->gateway);
         curl_setopt($ch, CURLOPT_TIMEOUT, 5);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-            "x-sdk-client" => "php/2.0.0"
-        ));
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array("x-sdk-client" => "php/2.0.0"));
         if (substr($this->gateway, 0, 5) == 'https') {
             curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
             curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
         }
         $result = curl_exec($ch);
         if ($result === false) {
-            trigger_error("[CURL_" . curl_errno($ch) . "]: " . curl_error($ch), E_USER_ERROR);
+           throw new InvalidArgumentException("[CURL_" . curl_errno($ch) . "]: " . curl_error($ch));
         }
         curl_close($ch);
 
-        return $result;
+        return json_decode($result, true);
     }
 }
