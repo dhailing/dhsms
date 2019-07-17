@@ -3,13 +3,13 @@
 /*
  * (c) overtrue <i@overtrue.me>
  *
- * Modified By yansongda <me@yansongda.cn>
+ * Modified By yansongda <me@206989662@qq.com>
  *
  * This source file is subject to the MIT license that is bundled
  * with this source code in the file LICENSE.
  */
 
-namespace dhsms\Send\Traits;
+namespace dhsms\Traits;
 
 use GuzzleHttp\Client;
 use Psr\Http\Message\ResponseInterface;

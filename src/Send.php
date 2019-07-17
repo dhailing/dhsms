@@ -1,53 +1,55 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: Dh106
- * Date: 2019/1/26
- * Time: 14:04
+ * Created by Dh106
+ * User: DH
+ * Email: 206989662@qq.com
+ * Date: 2019/7/17
+ * Time: 14:09
  */
 
-namespace dhsms\Send;
+namespace dhsms;
 
 
-use dhsms\Send\Exceptions\InvalidArgumentException;
-use dhsms\Send\Support\Config;
+use dhsms\Exceptions\InvalidArgumentException;
+use dhsms\Support\Config;
 
 class Send
 {
     /**
-     * @var Config
-     */
+    * @var \Yansongda\Pay\Support\Config
+    */
     private $config;
-
 
     /**
      * @var string
      */
     private $drivers;
 
-
     /**
-     * @var
+     * @var \Yansongda\Pay\Contracts\GatewayInterface
      */
-    private $pool;
-
+    private $gateways;
 
     /**
-     * Send constructor.
+     * construct method.
+     *
+     * @author JasonYan <me@206989662@qq.com>
+     *
      * @param array $config
      */
-    public function __construct(array $config)
+    public function __construct(array $config = [])
     {
         $this->config = new Config($config);
     }
 
     /**
-     * 选择发送驱动
-     * @param $driver
-     * @return $this
-     * User: Dh106
-     * Date: 2019/1/27
-     * Time: 10:26
+     * set pay's driver.
+     *
+     * @author JasonYan <me@206989662@qq.com>
+     *
+     * @param string $driver
+     *
+     * @return Pay
      */
     public function driver($driver)
     {
@@ -61,52 +63,56 @@ class Send
     }
 
     /**
-     * 建立连接池
-     * @param $pool
-     * @return mixed
-     * User: Dh106
-     * Date: 2019/1/27
-     * Time: 10:28
+     * set pay's gateway.
+     *
+     * @author yansongda <me@206989662@qq.com>
+     *
+     * @param string $gateway
+     *
+     * @return \Yansongda\Pay\Contracts\GatewayInterface
      */
-    public function pool($pool)
+    public function gateway($gateway = 'web')
     {
         if (!isset($this->drivers)) {
             throw new InvalidArgumentException('Driver is not defined.');
         }
 
-        $this->pool = $this->createPool($pool);
+        $this->gateways = $this->createGateway($gateway);
 
-        return $this->pool;
+        return $this->gateways;
     }
 
     /**
-     * @param $pool
-     * @return mixed
-     * User: Dh106
-     * Date: 2019/1/27
-     * Time: 10:30
+     * create pay's gateway.
+     *
+     * @author yansongda <me@206989662@qq.com>
+     *
+     * @param string $gateway
+     *
+     * @return \Yansongda\Pay\Contracts\GatewayInterface
      */
-    protected function createPool($pool)
+    protected function createGateway($gateway)
     {
-        if (!file_exists(__DIR__.'/Smspool/'.ucfirst($this->drivers).'/'.ucfirst($pool).'Pool.php')) {
-            throw new InvalidArgumentException("Pool [$pool] is not supported.");
+        if (!file_exists(__DIR__.'/Gateways/'.ucfirst($this->drivers).'/'.ucfirst($gateway).'Gateway.php')) {
+            throw new InvalidArgumentException("Gateway [$gateway] is not supported.");
         }
 
-        $pool = __NAMESPACE__.'\\Smspool\\'.ucfirst($this->drivers).'\\'.ucfirst($pool).'Pool';
+        $gateway = __NAMESPACE__.'\\Gateways\\'.ucfirst($this->drivers).'\\'.ucfirst($gateway).'Gateway';
 
-        return $this->build($pool);
+        return $this->build($gateway);
     }
 
     /**
-     * 建立发送短信的驱动池
-     * @param $pool
-     * @return mixed
-     * User: Dh106
-     * Date: 2019/1/27
-     * Time: 10:31
+     * build pay's gateway.
+     *
+     * @author JasonYan <me@206989662@qq.com>
+     *
+     * @param string $gateway
+     *
+     * @return \Yansongda\Pay\Contracts\GatewayInterface
      */
-    protected function build($pool)
+    protected function build($gateway)
     {
-        return $pool($this->config->get($this->drivers));
+        return new $gateway($this->config->get($this->drivers));
     }
 }

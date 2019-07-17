@@ -1,8 +1,7 @@
 <?php
 
-namespace  dhsms\Send\Exceptions;
+namespace dhsms\Exceptions;
 
 class Exception extends \Exception
 {
-
 }

@@ -1,6 +1,6 @@
 {
     "name": "dhsms/dhsms",
-    "description": "php dhsms",
+    "description": "常用的短信发送的封装",
     "authors": [
         {
             "name": "dhailing",
@@ -8,7 +8,8 @@
         }
     ],
     "require": {
-        "php": ">=5.6"
+        "php": ">=5.6",
+        "guzzlehttp/guzzle": "^6.3"
     },
     "license": "MIT",
     "minimum-stability": "dev",
