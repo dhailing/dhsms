@@ -96,6 +96,13 @@ public static function aliyun()
     $result = $sms->driver('aliyun')->gateway('action')->send($config_biz);
 
     dd($result);
+    
+//    array:4 [
+//      "Message" => "OK"
+//      "RequestId" => "27B11BA9-2A2E-4D64-AC7F-CE8CDB4386A2"
+//      "BizId" => "824800563362009295^0"
+//      "Code" => "OK"
+//    ]
 }
 
 ```
