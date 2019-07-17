@@ -70,3 +70,32 @@ public static function xuanwu()
 }
 
 ```
+
+## 阿里云短信
+
+```$xslt
+public static function aliyun()
+{
+    $user_config = [                    //阿里云申请的配置信息
+        'aliyun' => [
+            'accessKeyId' => '',
+            'accessKeySecret' => '',
+            'signName' => '',
+        ]
+    ];
+
+    $code = mt_rand(1000, 9999);
+    $config_biz = [
+        'mobile' => '182********',
+        'templateParam' => ['code' => $code],   //模板中的变量
+        'TemplateCode' => 'SMS_15******'        //阿里云申请的模板号/id
+    ];
+
+    $sms = new Send($user_config);
+
+    $result = $sms->driver('aliyun')->gateway('action')->send($config_biz);
+
+    dd($result);
+}
+
+```
