@@ -59,7 +59,7 @@ abstract class Juzhixin implements GatewayInterface
         $this->config['content'] = $config_biz['content'];
         $this->config['sendTime'] = $config_biz['sendTime'] ?: '';
 
-        return $this->doSend();
+//        return $this->doSend();
     }
 
     /**
