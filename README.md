@@ -40,3 +40,33 @@ public static function juzhixin($data)
 }
 
 ```
+
+## 玄武短信
+
+```$xslt
+public static function xuanwu()
+{
+    $user_config = [            //申请信息配置
+        'xuanwu' => [           //玄武短信配置
+            'account' => '',    //账号
+            'password' => '',   //密码
+            'subid' => '',      //用户id 可以为空
+        ]
+    ];
+
+    $code = mt_rand(1000, 9999);
+    $config_biz = [
+        'mobile' => '182********',
+        'content' => '您的验证码是' . $code . ',请在5分钟内使用。'
+    ];
+
+    $sms = new Send($user_config);
+
+    $result = $sms->driver('xuanwu')->gateway('action')->send($config_biz);
+
+    dd($result);
+    
+    //0 表示发送成功
+}
+
+```
