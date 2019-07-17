@@ -7,7 +7,7 @@
  * Time: 14:09
  */
 
-namespace dhsms;
+namespace dhsms\Send;
 
 
 use dhsms\Exceptions\InvalidArgumentException;
